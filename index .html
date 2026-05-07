@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>منصة ركيزة – تنظيم الفعاليات</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --royal-green: #0d4a2a;
+      --deep-green: #071f12;
+      --mid-green: #165c34;
+      --light-green: #1e7a45;
+      --gold: #c9a227;
+      --gold-light: #e8c84a;
+      --gold-pale: #f5e199;
+      --cream: #fdf6e3;
+      --white: #ffffff;
+      --text-muted: #8a9e8e;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background: var(--deep-green);
+      color: var(--white);
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE TEXTURE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1000;
+      opacity: 0.4;
+    }
+
+    /* ── NAVBAR ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 900;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.2rem 4rem;
+      background: rgba(7,31,18,0.85);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(201,162,39,0.15);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .logo-mark {
+      width: 42px; height: 42px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Amiri', serif;
+      font-size: 1.2rem;
+      color: var(--deep-green);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .logo-text {
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: rgba(255,255,255,0.75);
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+      transition: color 0.3s;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0; right: 0;
+      height: 1px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transition: transform 0.3s;
+    }
+
+    .nav-links a:hover { color: var(--gold-light); }
+    .nav-links a:hover::after { transform: scaleX(1); }
+
+    .nav-cta {
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      color: var(--deep-green) !important;
+      padding: 0.6rem 1.6rem;
+      border-radius: 4px;
+      font-weight: 700;
+      transition: opacity 0.3s !important;
+    }
+    .nav-cta:hover { opacity: 0.85; }
+    .nav-cta::after { display: none !important; }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      padding: 8rem 4rem 4rem;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 30% 50%, rgba(22,92,52,0.5) 0%, transparent 65%),
+        radial-gradient(ellipse 50% 40% at 80% 20%, rgba(201,162,39,0.12) 0%, transparent 60%),
+        var(--deep-green);
+    }
+
+    .hero-pattern {
+      position: absolute;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(60deg, transparent, transparent 40px, rgba(201,162,39,0.03) 40px, rgba(201,162,39,0.03) 41px),
+        repeating-linear-gradient(-60deg, transparent, transparent 40px, rgba(201,162,39,0.03) 40px, rgba(201,162,39,0.03) 41px);
+    }
+
+    /* decorative geometric shapes */
+    .hero-geo {
+      position: absolute;
+      right: -80px; top: 10%;
+      width: 560px; height: 560px;
+      border: 1px solid rgba(201,162,39,0.08);
+      border-radius: 50%;
+      animation: spinSlow 40s linear infinite;
+    }
+    .hero-geo::before {
+      content: '';
+      position: absolute;
+      inset: 40px;
+      border: 1px solid rgba(201,162,39,0.12);
+      border-radius: 50%;
+    }
+    .hero-geo::after {
+      content: '';
+      position: absolute;
+      inset: 80px;
+      border: 1px solid rgba(201,162,39,0.18);
+      border-radius: 50%;
+    }
+    @keyframes spinSlow { to { transform: rotate(360deg); } }
+
+    /* star-like ornament */
+    .ornament {
+      position: absolute;
+      right: 12%; top: 28%;
+      width: 200px; height: 200px;
+      opacity: 0.25;
+      animation: pulse 6s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:.2;transform:scale(1)} 50%{opacity:.35;transform:scale(1.05)} }
+
+    .hero-content {
+      position: relative;
+      z-index: 10;
+      max-width: 650px;
+      text-align: center;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(201,162,39,0.1);
+      border: 1px solid rgba(201,162,39,0.3);
+      padding: 0.4rem 1rem;
+      border-radius: 100px;
+      font-size: 0.85rem;
+      color: var(--gold-light);
+      letter-spacing: 0.05em;
+      margin-bottom: 1.8rem;
+      animation: fadeUp 0.8s ease both;
+    }
+    .hero-badge span { display: block; width: 6px; height: 6px; background: var(--gold); border-radius: 50%; }
+
+    .hero-title {
+      font-family: 'Amiri', serif;
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      line-height: 1.2;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      animation: fadeUp 0.9s 0.1s ease both;
+    }
+
+    .hero-title .accent {
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-subtitle {
+      font-size: 1.15rem;
+      line-height: 1.8;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 2.5rem;
+      animation: fadeUp 1s 0.2s ease both;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      animation: fadeUp 1.1s 0.3s ease both;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      color: var(--deep-green);
+      padding: 1rem 2.2rem;
+      border-radius: 6px;
+      font-size: 1.05rem;
+      font-weight: 800;
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      transition: transform 0.3s, box-shadow 0.3s;
+      box-shadow: 0 8px 30px rgba(201,162,39,0.3);
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 40px rgba(201,162,39,0.45);
+    }
+
+    .btn-secondary {
+      border: 1px solid rgba(201,162,39,0.4);
+      color: var(--gold-light);
+      padding: 1rem 2.2rem;
+      border-radius: 6px;
+      font-size: 1.05rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .btn-secondary:hover {
+      background: rgba(201,162,39,0.08);
+      border-color: var(--gold);
+    }
+
+    /* stats bar */
+    .hero-stats {
+      display: flex;
+      gap: 3rem;
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(201,162,39,0.15);
+      animation: fadeUp 1.2s 0.4s ease both;
+      justify-content: center;
+    }
+
+    .stat-item { text-align: center; }
+    .stat-num {
+      font-size: 2rem;
+      font-weight: 800;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: block;
+    }
+    .stat-label { font-size: 0.85rem; color: var(--text-muted); margin-top: 0.2rem; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── SECTION BASE ── */
+    section { padding: 7rem 4rem; }
+    .section-label {
+      text-align: center;
+      font-size: 0.8rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.8rem;
+    }
+    .section-title {
+      text-align: center;
+      font-family: 'Amiri', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+      line-height: 1.3;
+    }
+    .section-desc {
+      text-align: center;
+      max-width: 560px;
+      margin: 0 auto 4rem;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.8;
+      font-size: 1.05rem;
+    }
+    .gold-divider {
+      width: 60px; height: 2px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+      margin: 0 auto 1.5rem;
+      border-radius: 2px;
+    }
+
+    /* ── SERVICES ── */
+    #services { background: var(--royal-green); }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .service-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(201,162,39,0.12);
+      border-radius: 12px;
+      padding: 2.5rem 2rem;
+      transition: transform 0.4s, border-color 0.4s, background 0.4s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      transform: scaleX(0);
+      transition: transform 0.5s;
+    }
+
+    .service-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(201,162,39,0.35);
+      background: rgba(255,255,255,0.07);
+    }
+    .service-card:hover::before { transform: scaleX(1); }
+
+    .service-icon {
+      width: 56px; height: 56px;
+      background: linear-gradient(135deg, rgba(201,162,39,0.15), rgba(201,162,39,0.05));
+      border: 1px solid rgba(201,162,39,0.25);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .service-card h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 0.8rem;
+      color: var(--gold-pale);
+    }
+    .service-card p {
+      color: rgba(255,255,255,0.6);
+      line-height: 1.8;
+      font-size: 0.95rem;
+    }
+
+    /* ── PRICING ── */
+    #pricing { background: var(--deep-green); }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .price-card {
+      border: 1px solid rgba(201,162,39,0.15);
+      border-radius: 16px;
+      padding: 2.5rem 2rem;
+      background: rgba(255,255,255,0.03);
+      transition: transform 0.4s;
+      position: relative;
+    }
+
+    .price-card.featured {
+      background: linear-gradient(160deg, rgba(22,92,52,0.6), rgba(13,74,42,0.8));
+      border-color: var(--gold);
+      transform: scale(1.03);
+    }
+
+    .price-card:hover { transform: translateY(-6px); }
+    .price-card.featured:hover { transform: scale(1.03) translateY(-6px); }
+
+    .price-badge {
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+      color: var(--deep-green);
+      font-size: 0.78rem;
+      font-weight: 800;
+      padding: 0.35rem 1.2rem;
+      border-radius: 100px;
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+    }
+
+    .price-name {
+      font-size: 1rem;
+      color: var(--gold-light);
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .price-amount {
+      font-family: 'Amiri', serif;
+      font-size: 3rem;
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+
+    .price-period { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem; }
+
+    .price-divider { height: 1px; background: rgba(201,162,39,0.12); margin: 1.5rem 0; }
+
+    .price-features { list-style: none; }
+    .price-features li {
+      padding: 0.5rem 0;
+      color: rgba(255,255,255,0.7);
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+    .price-features li::before {
+      content: '✦';
+      color: var(--gold);
+      font-size: 0.6rem;
+      flex-shrink: 0;
+    }
+
+    .price-btn {
+      display: block;
+      text-align: center;
+      margin-top: 2rem;
+      padding: 0.9rem;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 1rem;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+    .price-btn.primary {
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      color: var(--deep-green);
+      box-shadow: 0 6px 24px rgba(201,162,39,0.3);
+    }
+    .price-btn.primary:hover { box-shadow: 0 10px 36px rgba(201,162,39,0.5); transform: translateY(-2px); }
+    .price-btn.outline {
+      border: 1px solid rgba(201,162,39,0.35);
+      color: var(--gold-light);
+    }
+    .price-btn.outline:hover { background: rgba(201,162,39,0.08); }
+
+    /* ── WHY US ── */
+    #why {
+      background: var(--royal-green);
+      position: relative;
+      overflow: hidden;
+    }
+
+    #why::before {
+      content: '';
+      position: absolute;
+      left: -200px; top: -200px;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(201,162,39,0.06) 0%, transparent 70%);
+    }
+
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .why-item {
+      text-align: center;
+      padding: 2rem 1.5rem;
+    }
+
+    .why-num {
+      font-family: 'Amiri', serif;
+      font-size: 4rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .why-item h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .why-item p { color: rgba(255,255,255,0.55); line-height: 1.7; font-size: 0.9rem; }
+
+    /* ── TESTIMONIAL ── */
+    #testimonials { background: var(--deep-green); }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .testimonial-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(201,162,39,0.1);
+      border-radius: 12px;
+      padding: 2rem;
+      position: relative;
+    }
+
+    .testimonial-card::before {
+      content: '"';
+      font-family: 'Amiri', serif;
+      font-size: 5rem;
+      line-height: 0.6;
+      color: rgba(201,162,39,0.15);
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+    }
+
+    .testimonial-text {
+      color: rgba(255,255,255,0.75);
+      line-height: 1.8;
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .author-avatar {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--mid-green), var(--royal-green));
+      border: 2px solid rgba(201,162,39,0.3);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+    }
+
+    .author-name { font-weight: 700; font-size: 0.9rem; }
+    .author-role { font-size: 0.8rem; color: var(--text-muted); }
+
+    /* ── CONTACT ── */
+    #contact {
+      background: linear-gradient(160deg, var(--royal-green), var(--deep-green));
+      position: relative;
+    }
+
+    .contact-wrapper {
+      max-width: 660px;
+      margin: 0 auto;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(201,162,39,0.15);
+      border-radius: 20px;
+      padding: 3.5rem;
+    }
+
+    .form-group { margin-bottom: 1.5rem; }
+
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.7);
+      font-weight: 500;
+    }
+
+    .form-input, .form-select, .form-textarea {
+      width: 100%;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(201,162,39,0.2);
+      border-radius: 8px;
+      padding: 0.9rem 1.2rem;
+      color: var(--white);
+      font-family: 'Tajawal', sans-serif;
+      font-size: 1rem;
+      transition: border-color 0.3s, background 0.3s;
+      outline: none;
+      direction: rtl;
+    }
+
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      border-color: var(--gold);
+      background: rgba(201,162,39,0.05);
+    }
+
+    .form-select option { background: var(--royal-green); }
+    .form-textarea { resize: vertical; min-height: 130px; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+    .submit-btn {
+      width: 100%;
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      color: var(--deep-green);
+      border: none;
+      padding: 1.1rem;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: 800;
+      font-family: 'Tajawal', sans-serif;
+      cursor: pointer;
+      letter-spacing: 0.03em;
+      transition: transform 0.3s, box-shadow 0.3s;
+      box-shadow: 0 8px 28px rgba(201,162,39,0.3);
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 40px rgba(201,162,39,0.45);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--deep-green);
+      border-top: 1px solid rgba(201,162,39,0.12);
+      padding: 3rem 4rem;
+      text-align: center;
+    }
+
+    .footer-logo {
+      font-family: 'Amiri', serif;
+      font-size: 1.8rem;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 1rem;
+    }
+
+    .footer-tagline { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem; }
+
+    .footer-links {
+      display: flex;
+      gap: 2rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+
+    .footer-links a {
+      color: rgba(255,255,255,0.5);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.3s;
+    }
+    .footer-links a:hover { color: var(--gold-light); }
+
+    .footer-copy { color: rgba(255,255,255,0.3); font-size: 0.8rem; }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── MOBILE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      #hero { padding: 7rem 1.5rem 3rem; }
+      section { padding: 5rem 1.5rem; }
+      .hero-stats { gap: 2rem; flex-wrap: wrap; }
+      .form-row { grid-template-columns: 1fr; }
+      .contact-wrapper { padding: 2rem 1.5rem; }
+      footer { padding: 2rem 1.5rem; }
+      .hero-geo { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <div class="logo">
+    <div class="logo-mark">ر</div>
+    <span class="logo-text">ركيزة</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#hero">الرئيسية</a></li>
+    <li><a href="#services">الخدمات</a></li>
+    <li><a href="#pricing">الأسعار</a></li>
+    <li><a href="#testimonials">آراء العملاء</a></li>
+    <li><a href="#contact" class="nav-cta">احجز الآن</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-pattern"></div>
+  <div class="hero-geo"></div>
+
+  <!-- SVG ornament -->
+  <svg class="ornament" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M100 10 L110 90 L190 100 L110 110 L100 190 L90 110 L10 100 L90 90 Z" fill="none" stroke="#c9a227" stroke-width="1"/>
+    <path d="M100 30 L107 93 L170 100 L107 107 L100 170 L93 107 L30 100 L93 93 Z" fill="none" stroke="#c9a227" stroke-width="0.5"/>
+    <circle cx="100" cy="100" r="8" fill="rgba(201,162,39,0.4)"/>
+  </svg>
+
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span></span>
+      منصة إدارة الفعاليات الرائدة في المملكة
+    </div>
+
+    <h1 class="hero-title">
+      نصمم فعالياتك<br/>
+      <span class="accent">بأعلى معايير</span><br/>
+      الجودة السعودية
+    </h1>
+
+    <p class="hero-subtitle">
+      من حفلات الأعراس الفاخرة إلى مؤتمرات الشركات الكبرى —
+      ركيزة توفر لك أفضل الخيارات بأسعار شفافة وحجز فوري.
+    </p>
+
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">احجز فعاليتك الآن ✦</a>
+      <a href="#services" class="btn-secondary">استعرض الخدمات</a>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat-item">
+        <span class="stat-num">+500</span>
+        <div class="stat-label">فعالية منجزة</div>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">+120</span>
+        <div class="stat-label">قاعة شريكة</div>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">98%</span>
+        <div class="stat-label">رضا العملاء</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <p class="section-label reveal">خدماتنا</p>
+  <h2 class="section-title reveal">كل ما تحتاجه لفعالية لا تُنسى</h2>
+  <div class="gold-divider reveal"></div>
+  <p class="section-desc reveal">نقدم حلولاً متكاملة لتنظيم الفعاليات بكل أحجامها وأنواعها داخل المملكة العربية السعودية</p>
+
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <div class="service-icon">🏛️</div>
+      <h3>حجز القاعات</h3>
+      <p>اختر من بين أكثر من 120 قاعة مرتبة حسب السعة والموقع والسعر، مع معاينة افتراضية ثلاثية الأبعاد.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">🎊</div>
+      <h3>تنسيق الديكور</h3>
+      <p>فرق متخصصة في الديكور السعودي الأصيل والعصري، تحول أي مكان إلى تحفة فنية تليق بفعاليتك.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">🍽️</div>
+      <h3>خدمات الضيافة</h3>
+      <p>شراكات مع أبرز شركات التموين والمطاعم السعودية لتقديم قوائم طعام تُرضي أذواق ضيوفك.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">📸</div>
+      <h3>التصوير والإنتاج</h3>
+      <p>مصورون محترفون وفرق إنتاج إعلامي لتوثيق كل لحظة من فعاليتك بأعلى جودة.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">🎤</div>
+      <h3>إدارة الحفلات</h3>
+      <p>مديرو فعاليات معتمدون يشرفون على كل تفصيل من التخطيط حتى تسليم المفتاح.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">💳</div>
+      <h3>مقارنة الأسعار</h3>
+      <p>أداة مقارنة ذكية تساعدك على اختيار أفضل باقة تناسب ميزانيتك دون التنازل عن الجودة.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <p class="section-label reveal">الباقات</p>
+  <h2 class="section-title reveal">اختر الباقة المناسبة لك</h2>
+  <div class="gold-divider reveal"></div>
+  <p class="section-desc reveal">أسعار شفافة بلا رسوم مخفية — احجز اليوم وادفع بعد التأكيد</p>
+
+  <div class="pricing-grid">
+    <div class="price-card reveal">
+      <div class="price-name">الباقة الأساسية</div>
+      <div class="price-amount">2,500 <span style="font-size:1.2rem">ر.س</span></div>
+      <div class="price-period">تبدأ من</div>
+      <div class="price-divider"></div>
+      <ul class="price-features">
+        <li>حجز القاعة</li>
+        <li>ضيافة بسيطة</li>
+        <li>تصوير فوتوغرافي</li>
+        <li>مدير فعاليات</li>
+        <li>دعم هاتفي</li>
+      </ul>
+      <a href="#contact" class="price-btn outline">احجز الآن</a>
+    </div>
+
+    <div class="price-card featured reveal">
+      <div class="price-badge">الأكثر طلبًا ✦</div>
+      <div class="price-name">الباقة المميزة</div>
+      <div class="price-amount">7,800 <span style="font-size:1.2rem">ر.س</span></div>
+      <div class="price-period">تبدأ من</div>
+      <div class="price-divider"></div>
+      <ul class="price-features">
+        <li>حجز قاعة فاخرة</li>
+        <li>ضيافة كاملة متنوعة</li>
+        <li>تصوير + فيديو احترافي</li>
+        <li>ديكور مخصص</li>
+        <li>مدير فعاليات متخصص</li>
+        <li>دعم 24/7 قبل وأثناء الفعالية</li>
+      </ul>
+      <a href="#contact" class="price-btn primary">احجز الآن</a>
+    </div>
+
+    <div class="price-card reveal">
+      <div class="price-name">باقة المؤسسات</div>
+      <div class="price-amount">حسب الطلب</div>
+      <div class="price-period">للفعاليات الكبرى</div>
+      <div class="price-divider"></div>
+      <ul class="price-features">
+        <li>حلول مخصصة بالكامل</li>
+        <li>فريق متكامل مخصص</li>
+        <li>إنتاج إعلامي متكامل</li>
+        <li>شراكات VIP</li>
+        <li>تقارير ومتابعة شاملة</li>
+      </ul>
+      <a href="#contact" class="price-btn outline">تواصل معنا</a>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section id="why">
+  <p class="section-label reveal">لماذا ركيزة؟</p>
+  <h2 class="section-title reveal">الجودة ليست خيارًا — هي معيارنا</h2>
+  <div class="gold-divider reveal"></div>
+
+  <div class="why-grid">
+    <div class="why-item reveal">
+      <div class="why-num">+10</div>
+      <h3>سنوات خبرة</h3>
+      <p>خبرة عميقة في سوق الفعاليات السعودي تضمن لك نتائج استثنائية</p>
+    </div>
+    <div class="why-item reveal">
+      <div class="why-num">24</div>
+      <h3>ساعة دعم</h3>
+      <p>فريق الدعم متاح على مدار الساعة طوال أيام الأسبوع لراحة بالك</p>
+    </div>
+    <div class="why-item reveal">
+      <div class="why-num">100%</div>
+      <h3>ضمان الجودة</h3>
+      <p>نضمن تنفيذ فعاليتك وفق أعلى المعايير أو نسترد لك المبلغ كاملًا</p>
+    </div>
+    <div class="why-item reveal">
+      <div class="why-num">5★</div>
+      <h3>تقييم العملاء</h3>
+      <p>حافظنا على تقييم 5 نجوم من أكثر من 350 عميل راضٍ في المملكة</p>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <p class="section-label reveal">آراء العملاء</p>
+  <h2 class="section-title reveal">ماذا يقول عملاؤنا</h2>
+  <div class="gold-divider reveal"></div>
+
+  <div class="testimonials-grid">
+    <div class="testimonial-card reveal">
+      <p class="testimonial-text">
+        نظمت ركيزة حفل زواجنا بشكل خيالي تجاوز كل توقعاتنا. الاهتمام بالتفاصيل والاحترافية كانا في مستوى عالٍ جدًا.
+      </p>
+      <div class="testimonial-author">
+        <div class="author-avatar">👤</div>
+        <div>
+          <div class="author-name">محمد العتيبي</div>
+          <div class="author-role">الرياض</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial-card reveal">
+      <p class="testimonial-text">
+        نجحت ركيزة في تنظيم مؤتمر شركتنا لـ500 شخص بكفاءة مذهلة. حجز القاعة والتنسيق كان سلسًا جدًا من خلال المنصة.
+      </p>
+      <div class="testimonial-author">
+        <div class="author-avatar">👤</div>
+        <div>
+          <div class="author-name">سارة الغامدي</div>
+          <div class="author-role">مديرة تنفيذية، جدة</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial-card reveal">
+      <p class="testimonial-text">
+        الشفافية في الأسعار ميزتهم الكبرى — لا مفاجآت، لا رسوم مخفية. وفرت أكثر من 30% بفضل أداة المقارنة.
+      </p>
+      <div class="testimonial-author">
+        <div class="author-avatar">👤</div>
+        <div>
+          <div class="author-name">خالد الشمري</div>
+          <div class="author-role">رجل أعمال، الدمام</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <p class="section-label reveal">تواصل معنا</p>
+  <h2 class="section-title reveal">ابدأ تخطيط فعاليتك الآن</h2>
+  <div class="gold-divider reveal"></div>
+  <p class="section-desc reveal">أرسل تفاصيل فعاليتك وسيتواصل معك فريقنا خلال ساعتين</p>
+
+  <div class="contact-wrapper reveal">
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">الاسم الكامل</label>
+        <input type="text" class="form-input" placeholder="أدخل اسمك"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">رقم الجوال</label>
+        <input type="tel" class="form-input" placeholder="+966 5XX XXX XXX"/>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">البريد الإلكتروني</label>
+      <input type="email" class="form-input" placeholder="name@example.com"/>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">نوع الفعالية</label>
+        <select class="form-select">
+          <option>اختر نوع الفعالية</option>
+          <option>حفل زواج</option>
+          <option>مؤتمر أعمال</option>
+          <option>حفل تخرج</option>
+          <option>فعالية شركات</option>
+          <option>حفل ميلاد</option>
+          <option>أخرى</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">عدد المدعوين</label>
+        <select class="form-select">
+          <option>اختر العدد</option>
+          <option>أقل من 50</option>
+          <option>50 – 150</option>
+          <option>150 – 300</option>
+          <option>300 – 500</option>
+          <option>أكثر من 500</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">تاريخ الفعالية (تقريبي)</label>
+      <input type="date" class="form-input"/>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">تفاصيل إضافية</label>
+      <textarea class="form-textarea" placeholder="أخبرنا عن فعاليتك وما تتوقعه..."></textarea>
+    </div>
+
+    <button class="submit-btn" onclick="handleSubmit(this)">✦ أرسل طلب الحجز</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">منصة ركيزة</div>
+  <p class="footer-tagline">نصمم فعالياتك بأعلى معايير الجودة السعودية</p>
+  <div class="footer-links">
+    <a href="#hero">الرئيسية</a>
+    <a href="#services">الخدمات</a>
+    <a href="#pricing">الأسعار</a>
+    <a href="#contact">تواصل معنا</a>
+    <a href="#">سياسة الخصوصية</a>
+  </div>
+  <p class="footer-copy">© 2025 منصة ركيزة. جميع الحقوق محفوظة.</p>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Form submit
+  function handleSubmit(btn) {
+    btn.textContent = '✓ تم إرسال طلبك بنجاح!';
+    btn.style.background = 'linear-gradient(135deg, #1e7a45, #2ecc71)';
+    btn.style.color = '#fff';
+    setTimeout(() => {
+      btn.textContent = '✦ أرسل طلب الحجز';
+      btn.style.background = '';
+      btn.style.color = '';
+    }, 4000);
+  }
+
+  // Smooth active nav highlight
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 160) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + current
+        ? 'var(--gold-light)' : '';
+    });
+  });
+</script>
+</body>
+</html>
